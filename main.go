@@ -154,7 +154,7 @@ func handleFileMove(filePath string, config AppConfig) error {
 		return fmt.Errorf("move failed: %w", err)
 	}
 
-	log.Printf("✅ Sorted: %s -> %s", filename, destPath)
+	log.Printf("Sorted: %s -> %s", filename, destPath)
 	return nil
 }
 
@@ -174,12 +174,12 @@ func SorterWorker(config AppConfig) {
 			}
 
 			if err == ErrFileBusy {
-				log.Printf("⏳ Retry #%d for %s: File busy. Waiting %v...", attempt, filepath.Base(filePath), retryDelay)
+				log.Printf("Retry #%d for %s: File busy. Waiting %v...", attempt, filepath.Base(filePath), retryDelay)
 				time.Sleep(retryDelay)
 				continue
 			}
 
-			log.Printf("❌ Fatal sort error for %s: %v", filepath.Base(filePath), err)
+			log.Printf("Fatal sort error for %s: %v", filepath.Base(filePath), err)
 			break
 		}
 	}
@@ -229,9 +229,9 @@ func main() {
 
 					select {
 					case SorterQueue <- event.Name:
-						log.Printf("➕ Queued: %s for sorting.", filepath.Base(event.Name))
+						log.Printf("Queued: %s for sorting.", filepath.Base(event.Name))
 					default:
-						log.Printf("⚠️ Queue is full. Dropping legitimate event for %s.", filepath.Base(event.Name))
+						log.Printf("Queue is full. Dropping legitimate event for %s.", filepath.Base(event.Name))
 					}
 				}
 			case err, ok := <-watcher.Errors:
